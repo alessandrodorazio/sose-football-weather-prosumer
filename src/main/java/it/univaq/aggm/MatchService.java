@@ -42,8 +42,10 @@ public class MatchService {
 				 Element visitorTeam = (Element) element.getElementsByTagName("visitorTeam").item(0);
 				 Team visitor = getTeamFromElement(visitorTeam);
 				 Match match = new Match();
+				 String coordinates = element.getElementsByTagName("coordinates").item(0).getTextContent();
 				 match.setLocalTeam(local);
 				 match.setVisitorTeam(visitor);
+				 match.setCoordinates(coordinates);
 				 result.add(match);
 			 }
 		 }
