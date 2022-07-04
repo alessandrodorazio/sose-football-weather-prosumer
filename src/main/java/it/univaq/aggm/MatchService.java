@@ -58,7 +58,7 @@ public class MatchService {
 			.url("http://localhost:8081/matches/today")
 			.get()
 			.build();
-		Response response = client.newCall(request).execute();
+		Response response = client.newCall(request).execute();	
 		String data = response.body().string();
 		System.out.println(data.toString());
 		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(data)));

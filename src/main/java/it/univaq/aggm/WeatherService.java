@@ -57,6 +57,8 @@ public class WeatherService {
 		Weather weather = new Weather();
 		weather.setName(getElementValue("name", data));
 		weather.setTemperature(getElementValue("temperature", data));
+		weather.setWeather(getElementValue("weather", data));
+		//System.out.println(weather.getWeather());
 		return weather;
 	}
 }
