@@ -45,7 +45,7 @@ public class MatchService {
 				 String coordinates = element.getElementsByTagName("coordinates").item(0).getTextContent();
 				 String localScore = element.getElementsByTagName("localScore").item(0).getTextContent();
 				 String visitorScore = element.getElementsByTagName("visitorScore").item(0).getTextContent();
-				 System.out.println("local score " + localScore);
+				 //System.out.println("local score " + localScore);
 				 match.setLocalTeam(local);
 				 match.setVisitorTeam(visitor);
 				 match.setLocalTeamScore(Integer.parseInt(localScore));
