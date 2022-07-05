@@ -21,7 +21,7 @@ public class StartService {
 		JAXRSServerFactoryBean factoryBean = new JAXRSServerFactoryBean();
         factoryBean.setResourceClasses(ServiceRepository.class);
         factoryBean.setResourceProvider(new SingletonResourceProvider(new ServiceRepository()));
-        factoryBean.setAddress("http://localhost:8083/");
+        factoryBean.setAddress("http://0.0.0.0:8083/");
         Server server = factoryBean.create();
         System.out.println("Server ready...");
 	}
@@ -30,7 +30,7 @@ public class StartService {
 		Endpoint ep = Endpoint.create(new ServiceRepository());
 		List<Handler> handlerChain = ep.getBinding().getHandlerChain();
 		ep.getBinding().setHandlerChain(handlerChain);
-		ep.publish("http://localhost:8093/");
+		ep.publish("http://0.0.0.0:8093/");
 		System.out.println("SOAP server ready...");
 	}
 
