@@ -1,11 +1,26 @@
 package it.univaq.aggm;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="Match")
 public class Match {
 	private Team localTeam;
 	private Team visitorTeam;
 	private int localTeamScore;
 	private int visitorTeamScore;
 	private String coordinates;
+	
+	public Match() {
+		
+	}
+	
+	public Match(Team localTeam, int localTeamScore, Team visitorTeam, int visitorTeamScore, String coordinates) {
+		this.localTeam = localTeam;
+		this.localTeamScore = localTeamScore;
+		this.visitorTeam = visitorTeam;
+		this.visitorTeamScore = visitorTeamScore;
+		this.coordinates = coordinates;
+	}
 	
 	public Team getLocalTeam() {
 		return localTeam;

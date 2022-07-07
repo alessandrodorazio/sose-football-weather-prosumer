@@ -23,10 +23,31 @@ public class MatchService {
 	private static Team getTeamFromElement(Element element) {
 		int id = Integer.parseInt(element.getElementsByTagName("id").item(0).getTextContent());
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
-		Team team = new Team();
-		team.setId(id);
-		team.setName(name);
-		return team;
+		return new Team(id, name);
+	}
+	
+	public static Match getMatchByTeamNames(String localTeamName, String visitorTeamName) throws IOException, SAXException, ParserConfigurationException {
+		Document doc = getDocument();
+		NodeList list = doc.getElementsByTagName("Match"); // get matches from the document
+		for (int temp = 0; temp < list.getLength(); temp++) {
+			 Node node = list.item(temp);
+			 if (node.getNodeType() == Node.ELEMENT_NODE) {
+				 Element element = (Element) node;
+				 Element localTeam = (Element) element.getElementsByTagName("localTeam").item(0);
+				 Team local = getTeamFromElement(localTeam);
+				 Element visitorTeam = (Element) element.getElementsByTagName("visitorTeam").item(0);
+				 Team visitor = getTeamFromElement(visitorTeam);
+				 if(local.getName() == localTeamName && visitor.getName() == visitorTeamName) {
+					Match match = new Match();
+					 match.setLocalTeam(local);
+					 match.setVisitorTeam(visitor);
+					 match.setCoordinates(element.getElementsByTagName("coordinates").item(0).toString());
+					 return match;
+				 }
+				 
+			 }
+		}
+		return null;
 	}
 	
 	public static ArrayList<Match> getTodayMatches() throws IOException, SAXException, ParserConfigurationException {
@@ -41,17 +62,12 @@ public class MatchService {
 				 Team local = getTeamFromElement(localTeam);
 				 Element visitorTeam = (Element) element.getElementsByTagName("visitorTeam").item(0);
 				 Team visitor = getTeamFromElement(visitorTeam);
-				 Match match = new Match();
 				 String coordinates = element.getElementsByTagName("coordinates").item(0).getTextContent();
 				 String localScore = element.getElementsByTagName("localScore").item(0).getTextContent();
 				 String visitorScore = element.getElementsByTagName("visitorScore").item(0).getTextContent();
-				 //System.out.println("local score " + localScore);
-				 match.setLocalTeam(local);
-				 match.setVisitorTeam(visitor);
-				 match.setLocalTeamScore(Integer.parseInt(localScore));
-				 match.setVisitorTeamScore(Integer.parseInt(visitorScore));
-				 match.setCoordinates(coordinates);
-				 result.add(match);
+				 int localScoreInt = Integer.parseInt(localScore);
+				 int visitorScoreInt = Integer.parseInt(visitorScore);
+				 result.add(new Match(local, localScoreInt, visitor, visitorScoreInt, coordinates ));
 			 }
 		 }
 		return result;
@@ -59,11 +75,9 @@ public class MatchService {
 	
 	private static Document getDocument() throws IOException, SAXException, ParserConfigurationException {
 		OkHttpClient client = new OkHttpClient();
-		Request request = new Request.Builder()
-			.url("http://localhost:8081/matches/today")
-			.get()
-			.build();
-		Response response = client.newCall(request).execute();	
+		String url = "http://localhost:8081/matches";
+		Request request = new Request.Builder().url(url).get().build();
+		Response response = client.newCall(request).execute();
 		String data = response.body().string();
 		System.out.println(data.toString());
 		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(data)));

@@ -8,6 +8,16 @@ public class MatchWithWeather {
 	private String location;
 	private Weather weather;
 	
+	public MatchWithWeather() {
+		
+	}
+	
+	public MatchWithWeather(Match match, String location, Weather weather) {
+		this.match = match;
+		this.location = location;
+		this.weather = weather;
+	}
+	
 	public Match getMatch() {
 		return match;
 	}
