@@ -22,7 +22,10 @@ public class ServiceRepository implements ServiceRepositoryInterface {
 	@GET @Path("/weather-by-match")
 	public Weather getWeatherByMatch(@QueryParam("localTeamName") String localTeamName, @QueryParam("visitorTeamName") String visitorTeamName) throws IOException, ParserConfigurationException, SAXException {
 		Match match = MatchService.getMatchByTeamNames(localTeamName, visitorTeamName);
-		return WeatherService.getData(match.getCoordinates());
+		if(match!=null) {
+			return WeatherService.getData(match.getCoordinates());
+		}
+		return new Weather();
 	}
 	
 	@GET @Path("/matches-with-weather")

@@ -30,21 +30,28 @@ public class MatchService {
 		Document doc = getDocument();
 		NodeList list = doc.getElementsByTagName("Match"); // get matches from the document
 		for (int temp = 0; temp < list.getLength(); temp++) {
-			 Node node = list.item(temp);
+			System.out.println("Analyzing " + temp + "th match of " + list.getLength());
+			Node node = list.item(temp);
 			 if (node.getNodeType() == Node.ELEMENT_NODE) {
 				 Element element = (Element) node;
 				 Element localTeam = (Element) element.getElementsByTagName("localTeam").item(0);
 				 Team local = getTeamFromElement(localTeam);
 				 Element visitorTeam = (Element) element.getElementsByTagName("visitorTeam").item(0);
 				 Team visitor = getTeamFromElement(visitorTeam);
-				 if(local.getName() == localTeamName && visitor.getName() == visitorTeamName) {
+				 System.out.println("Local team: " + local.getName() + " - Query: " + localTeamName);
+				 System.out.println("Visitor team: " + visitor.getName() + " - Query: " + visitorTeamName);
+				 if(local.getName().equals(localTeamName) && visitor.getName().equals(visitorTeamName)) {
+					 System.out.println("prova");
 					Match match = new Match();
 					 match.setLocalTeam(local);
 					 match.setVisitorTeam(visitor);
-					 match.setCoordinates(element.getElementsByTagName("coordinates").item(0).toString());
+					 String coordinates = element.getElementsByTagName("coordinates").item(0).getTextContent();
+					 System.out.println("Coords from element " + coordinates);
+					 match.setCoordinates(coordinates);
 					 return match;
 				 }
-				 
+			 } else {
+				 System.out.println("Node problem");
 			 }
 		}
 		return null;

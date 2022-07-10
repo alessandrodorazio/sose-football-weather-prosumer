@@ -12,7 +12,7 @@ import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
 public class StartServiceFootballWeatherProsumer {
 
 	public static void main(String[] args) {
-		String restAddress = "http://localhost:8083/";
+		String restAddress = "http://0.0.0.0:8083/";
 		String soapAddress = "http://localhost:8093/football-weather";
 		startRest(restAddress);
 		startSoap(soapAddress);
