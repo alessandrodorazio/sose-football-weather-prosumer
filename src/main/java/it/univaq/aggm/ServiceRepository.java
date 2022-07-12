@@ -30,6 +30,7 @@ public class ServiceRepository implements ServiceRepositoryInterface {
 	
 	@GET @Path("/matches-with-weather")
 	public ArrayList<MatchWithWeather> matchesWithWeather() throws IOException, ParserConfigurationException, SAXException {
+		System.out.println("Football weather prosumer 1");
 		ArrayList<MatchWithWeather> result = new ArrayList<MatchWithWeather>();
 		ArrayList<Match> matches = MatchService.getTodayMatches(); //get matches of the day
 		for(int i=0; i<matches.size(); i++) {

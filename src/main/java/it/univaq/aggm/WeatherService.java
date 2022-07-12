@@ -21,7 +21,7 @@ public class WeatherService {
 	
 	public static Weather getData(String coordinates) throws IOException, ParserConfigurationException, SAXException {
 		OkHttpClient client = new OkHttpClient();
-		String url = "http://localhost:8080/weather/byCoordinates/" + coordinates;
+		String url = "http://localhost:8081/weather/byCoordinates/" + coordinates;
 		Request request = new Request.Builder().url(url).get().build();
 		Response response = client.newCall(request).execute();
 		String data = response.body().string();

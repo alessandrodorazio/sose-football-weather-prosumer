@@ -75,7 +75,7 @@ public class MatchService {
 	
 	private static Document getDocument() throws IOException, SAXException, ParserConfigurationException {
 		OkHttpClient client = new OkHttpClient();
-		String url = "http://localhost:8081/matches";
+		String url = "http://localhost:8083/matches";
 		Request request = new Request.Builder().url(url).get().build();
 		Response response = client.newCall(request).execute();
 		String data = response.body().string();
